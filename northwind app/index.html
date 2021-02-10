@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+
+/*Invoice*/
+.invoice .top-left {
+    font-size:65px;
+	color:#3ba0ff;
+}
+
+.invoice .top-right {
+	text-align:right;
+	padding-right:20px;
+}
+
+.invoice .table-row {
+	margin-left:-15px;
+	margin-right:-15px;
+	margin-top:25px;
+}
+
+.invoice .payment-info {
+	font-weight:500;
+}
+
+.invoice .table-row .table>thead {
+	border-top:1px solid #ddd;
+}
+
+.invoice .table-row .table>thead>tr>th {
+	border-bottom:none;
+}
+
+.invoice .table>tbody>tr>td {
+	padding:8px 20px;
+}
+
+.invoice .invoice-total {
+	margin-right:-10px;
+	font-size:16px;
+}
+
+.invoice .last-row {
+	border-bottom:1px solid #ddd;
+}
+
+.invoice-ribbon {
+	width:85px;
+	height:88px;
+	overflow:hidden;
+	position:absolute;
+	top:-1px;
+	right:14px;
+}
+
+.ribbon-inner {
+	text-align:center;
+	-webkit-transform:rotate(45deg);
+	-moz-transform:rotate(45deg);
+	-ms-transform:rotate(45deg);
+	-o-transform:rotate(45deg);
+	position:relative;
+	padding:7px 0;
+	left:-5px;
+	top:11px;
+	width:120px;
+	background-color:#66c591;
+	font-size:15px;
+	color:#fff;
+}
+
+.ribbon-inner:before,.ribbon-inner:after {
+	content:"";
+	position:absolute;
+}
+
+.ribbon-inner:before {
+	left:0;
+}
+
+.ribbon-inner:after {
+	right:0;
+}
+
+@media(max-width:575px) {
+	.invoice .top-left,.invoice .top-right,.invoice .payment-details {
+		text-align:center;
+	}
+
+	.invoice .from,.invoice .to,.invoice .payment-details {
+		float:none;
+		width:100%;
+		text-align:center;
+		margin-bottom:25px;
+	}
+
+	.invoice p.lead,.invoice .from p.lead,.invoice .to p.lead,.invoice .payment-details p.lead {
+		font-size:22px;
+	}
+
+	.invoice .btn {
+		margin-top:10px;
+	}
+}
+
+@media print {
+	.invoice {
+		width:900px;
+		height:800px;
+	}
+}
+</style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Suppliers</h2>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addsupplier">
+            Add supplier
+        </button>
+
+        <table id="supplier" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Job title</th>
+                    <th>Frist name</th>
+                    <th>Last name</th>
+                    <th>Company</th>
+                    <th>Email address</th>
+                    <th>City</th>
+                    <th>Phone</th>
+                    <th>Edit</th>
+                    <th>View details</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <!--  -->
+
+    <!-- The Modal -->
+    <div class="modal" id="addsupplier">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">New Supplier </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="job_title">Job Title:</label>
+                            <input type="text" class="form-control" placeholder="Enter Job title" id="job_title">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" class="form-control" placeholder="enter first_name" id="first_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" class="form-control" placeholder="Enter Last name" id="last_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="company_name">Company Name:</label>
+                            <input type="text" class="form-control" placeholder="Enter compnay name" id="company_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email_address">Email Address:</label>
+                            <input type="text" class="form-control" placeholder="Enter Your Email" id="email_address">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" class="form-control" placeholder="Enter Your city name" id="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="business_phone">Phone:</label>
+                            <input type="tel" class="form-control" placeholder="Enter Your Number" id="business_phone">
+                        </div>
+
+                        <button type="button" class="btn btn-primary" id="add_supplier" data-dismiss="modal">Submit</button>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- edit supplier-->
+
+
+    <!-- The Modal -->
+    <div class="modal" id="editSupplier">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Supplier </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="job_title">Job Title:</label>
+                            <input type="text" class="form-control" placeholder="Enter Job title" id="edit_job_title">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" class="form-control" placeholder="enter first_name" id="edit_first_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" class="form-control" placeholder="Enter Last name" id="edit_last_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="company_name">Company Name:</label>
+                            <input type="text" class="form-control" placeholder="Enter compnay name" id="edit_company_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email_address">Email Address:</label>
+                            <input type="text" class="form-control" placeholder="Enter Your Email" id="edit_email_address">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" class="form-control" placeholder="Enter Your city name" id="edit_city">
+                        </div>
+                        <div class="form-group">
+                            <label for="business_phone">Phone:</label>
+                            <input type="tel" class="form-control" placeholder="Enter Your Number" id="edit_business_phone">
+                        </div>
+                        <input type="hidden" id="edit_id">
+                        <button type="button" class="btn btn-primary edit-supplier" id="edit_supplier">Submit</button>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+   
+    <!-- View supplier detail -->
+    <div class="modal" id="supplier_details">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"> Supplier Details </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <a class="nav-link active" id="nav-summary-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Summary</a>
+                          <a class="nav-link" id="nav-order-detail-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Order details</a>
+                          
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-summary-tab">
+                            <form>
+                                <div class="form-group">
+                                    <label for="detail_job_title">Job Title:</label>
+                                    <input type="text" class="form-control" placeholder="Enter Job title" id="detail_job_title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="detail_first_name">First Name:</label>
+                                    <input type="text" class="form-control" placeholder="enter first_name" id="detail_first_name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Last Name:</label>
+                                    <input type="text" class="form-control" placeholder="Enter Last name" id="detail_last_name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company_name">Company Name:</label>
+                                    <input type="text" class="form-control" placeholder="Enter compnay name" id="detail_company_name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email_address">Email Address:</label>
+                                    <input type="text" class="form-control" placeholder="Enter Your Email" id="detail_email_address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City:</label>
+                                    <input type="text" class="form-control" placeholder="Enter Your city name" id="detail_city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="business_phone">Phone:</label>
+                                    <input type="tel" class="form-control" placeholder="Enter Your Number" id="detail_business_phone">
+                                </div>
+                                <input type="hidden" id="detail_id">
+                                
+                            </form>
+                        </div>
+                        <!-- Order details -->
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-order-detail-tab">
+                            <table id="supplier-purchasing-order" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>submitted-date</th>
+                                        <th>approved by</th>
+                                        <th>status</th>
+                                        <th>expected date</th>
+                                        <th>Action</th>
+                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                        
+                      </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+     <!--  -->
+    
+    <!-- The Modal -->
+    <div class="modal" id="invoice">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Invoice </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container bootstrap snippets bootdeys">
+                        <div class="row">
+                          <div class="col-sm-12">
+                                  <div class="panel panel-default invoice" id="invoice">
+                                  <div class="panel-body">
+                                    <div class="invoice-ribbon"><div class="ribbon-inner">PAID</div></div>
+                                    <div class="row">
+                        
+                                        <div class="col-sm-6 top-left">
+                                            <i class="fa fa-rocket"></i>
+                                        </div>
+                        
+                                        <div class="col-sm-6 top-right">
+                                                <h3 id="invoice_id" class="marginright"></h3>
+                                                <span id="invoice_date" class="marginright"></span>
+                                        </div>
+                        
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                        
+                                        <div id="purchase_from" class="col-xs-4 from">
+                                                                                 </div>
+                        
+                                        <div class="col-xs-4 to">
+                                            <p class="lead marginbottom">To : John Doe</p>
+                                            <p>425 Market Street</p>
+                                            <p>Suite 2200, San Francisco</p>
+                                            <p>California, 94105</p>
+                                            <p>Phone: 415-676-3600</p>
+                                            <p>Email: john@doe.com</p>
+                        
+                                        </div>
+                        
+                                        <div class="col-xs-4 text-right payment-details">
+                                            <p class="lead marginbottom payment-info">Payment details</p>
+                                            <p>Date: 14 April 2014</p>
+                                            <p>VAT: DK888-777 </p>
+                                            <p>Total Amount: $1019</p>
+                                            <p>Account Name: Flatter</p>
+                                        </div>
+                        
+                                    </div>
+                        
+                                    <div class="row table-row">
+                                        <table id="invoice_items" class="table table-striped">
+                                          <thead>
+                                            <tr>
+                                              <th class="text-center" style="width:5%">#</th>
+                                              <th style="width:50%">Item</th>
+                                              <th class="text-right" style="width:15%">Quantity</th>
+                                              <th class="text-right" style="width:15%">Unit Price</th>
+                                              <th class="text-right" style="width:15%">Total Price</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            
+                                           </tbody>
+                                        </table>
+                        
+                                    </div>
+                        
+                                    <div class="row">
+                                    <div class="col-xs-6 margintop">
+                                        <p class="lead marginbottom">THANK YOU!</p>
+                        
+                                        <button class="btn btn-success" id="invoice-print"><i class="fa fa-print"></i> Print Invoice</button>
+                                        <button class="btn btn-danger"><i class="fa fa-envelope-o"></i> Mail Invoice</button>
+                                    </div>
+                                    <div class="col-xs-6 text-right pull-right invoice-total">
+                                              <p>Subtotal : $1019</p>
+                                              <p>Discount (10%) : $101 </p>
+                                              <p>VAT (8%) : $73 </p>
+                                              <p>Total : $991 </p>
+                                    </div>
+                                    </div>
+                        
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        $(document).ready(function () {
+
+            getSuppliers();
+            $('#add_supplier').click(function () {
+                // alert('is it working?');
+                var data = { job_title: $('#job_title').val(), first_name: $('#first_name').val(), last_name: $('#last_name').val(), company_name: $('#company_name').val(),email_address: $('#email_address').val(), city: $('#city').val(), business_phone: $('#business_phone').val() };
+                // console.log(data);
+                $.post("http://localhost:1000/add-supplier", data, function (record, status) {
+                    getSuppliers();
+                });
+            });
+            
+            // edit supplier
+            $('#edit_supplier').click(function () {
+                // alert('is it working?');
+                var data = { id: $('#edit_id').val(), job_title: $('#edit_job_title').val(), first_name: $('#edit_first_name').val(), last_name: $('#edit_last_name').val(), company_name: $('#edit_company_name').val(),email_address: $('#edit_email_address').val(), city: $('#edit_city').val(), business_phone: $('#edit_business_phone').val() };
+                // console.log(data);
+                $.post("http://localhost:1000/edit-supplier", data, function (record, status) {
+                    getSuppliers();
+                    editSupplierModal.hide();
+
+                });
+            });
+
+        });
+
+        function getSuppliers() {
+            $.get("http://localhost:1000/get-suppliers", function (record, status) {
+                var rows = "";
+
+                $.each(record.data, function (index, itemData) {
+                    //console.log(index);
+                    //     dataItems += index + ": " + itemData.job_title + "\n";
+                   // console.log(itemData);
+                    rows += "<tr><td>" + itemData.id + "</td><td>" + itemData.job_title + "</td><td>" + itemData.first_name + "</td><td>" + itemData.last_name + "</td><td>" + itemData.company + "</td><td>"+ itemData.email_address + "</td><td>" + itemData.city + "</td><td>" + itemData.business_phone +  "</td><td><button onclick='editSupplier(" + itemData.id + ")'>Edit</button></td><td><button onclick='detailsSupplier(" + itemData.id + ")'>View</button></td><td><button onclick='deleteSupplier(" + itemData.id + ")'>delete</button></td></tr>";
+                });
+                $("#supplier tbody").html(rows);
+
+            });
+        }
+        function deleteSupplier(id) {
+            $.get("http://localhost:1000/delete-supplier/" + id, function (data, status) {
+
+             getSuppliers();
+            });
+        }
+
+        var editSupplierModal = new bootstrap.Modal(document.getElementById('editSupplier'), {
+                                keyboard: false
+                        });
+
+        function editSupplier(id) {
+            $.get("http://localhost:1000/get-supplier/" + id, function (data, status) {
+                editSupplierModal.show();
+              var record = data.data[0];  
+                $('#edit_job_title').val(record.job_title);
+                $('#edit_first_name').val(record.first_name);
+                $('#edit_last_name').val(record.last_name);
+                $('#edit_company_name').val(record.company);
+                $('#edit_email_address').val(record.email_address);
+                $('#edit_city').val(record.city);
+                $('#edit_business_phone').val(record.business_phone);
+                $('#edit_id').val(record.id);
+               // console.log(data);
+                //console.log(status);
+            });
+        }
+        var viewSupplierModal = new bootstrap.Modal(document.getElementById('supplier_details'), {
+                                keyboard: false
+                        });
+        function detailsSupplier(id){
+            $.get("http://localhost:1000/get-supplier/" + id, function (data, status) {
+                viewSupplierModal.show();
+              var record = data.data[0];  
+                $('#detail_job_title').val(record.job_title);
+                $('#detail_first_name').val(record.first_name);
+                $('#detail_last_name').val(record.last_name);
+                $('#detail_company_name').val(record.company);
+                $('#detail_email_address').val(record.email_address);
+                $('#detail_city').val(record.city);
+                $('#detail_business_phone').val(record.business_phone);
+               // $('#edit_id').val(record.id);
+            //    // console.log(data);
+                //console.log(status);
+                purchaseOrderDetail(record.id);
+            });   
+        }
+        function purchaseOrderDetail(id){
+            $.get("http://localhost:1000/get-supplier-purchasing-orders/" + id , function (data, status) {
+                var rows = "";
+                
+                $.each(data.data, function (index, itemData) {
+                    //console.log(index);
+                    //     dataItems += index + ": " + itemData.job_title + "\n";
+                   // console.log(itemData);
+                    rows += "<tr><td>" + itemData.id + "</td><td>" + itemData.submitted_date + "</td><td>" + itemData.job_title + "( " + itemData.first_name +" " + itemData.last_name+")" + "</td><td>" + itemData.status + "</td><td>" + itemData.expected_date + "</td><td><button onclick='viewPurchasingOrder(" + itemData.id + ")'>View</button></td></tr>";
+                });
+                $("#supplier-purchasing-order tbody").html(rows);
+            });   
+        
+        }
+        var viewPurchasingModal = new bootstrap.Modal(document.getElementById('invoice'), {
+                                keyboard: false
+                        });
+
+        function viewPurchasingOrder(id){
+            viewPurchasingModal.show();
+            $.get("http://localhost:1000/get-purchasing-order/" + id , function (data, status) {
+                var purchase_order = data.data[0];
+                $('#invoice_id').html(purchase_order.id);
+                $('#invoice_date').html(purchase_order.creation_date);
+                var purchase_from = "<p class='lead marginbottom'>From : "+ purchase_order.company+"</p>";
+                    purchase_from += "<p>"+ purchase_order.first_name+ " "+ purchase_order.last_name+ " </p>";
+                    purchase_from += "<p>"+ purchase_order.job_title+ " </p>";
+                    purchase_from += "<p>"+ purchase_order.business_phone+ " </p>";
+                    purchase_from += "<p>"+ purchase_order.email_address+ " </p>";
+                                
+                $('#purchase_from').html(purchase_from);
+
+                purchasing_order_items(purchase_order.id);
+
+                // $.each(data.data, function (index, itemData) {
+                //     rows += "<tr><td>" + itemData.id + "</td><td>" + itemData.submitted_date + "</td><td>" + itemData.job_title + "( " + itemData.first_name +" " + itemData.last_name+")" + "</td><td>" + itemData.status + "</td><td>" + itemData.expected_date + "</td><td><button onclick='viewPurchasingOrder(" + itemData.id + ")'>View</button></td></tr>";
+                // });
+              //  $("#supplier-purchasing-order tbody").html(rows);
+            });   
+        }
+
+        function purchasing_order_items(purchasing_id){
+            $.get("http://localhost:1000/get-purchasing-order-item/" + purchasing_id , function (data, status){
+               var rows = "";
+               //console.log(data);
+                 $.each(data.data, function (index, itemData) {
+                     rows += "<tr><td class='text-center'>" + itemData.id + "</td><td class='text-left'>" + itemData.product_name + "</td><td class='text-right'>" + itemData.quantity  + "</td><td class='text-right'>" + itemData.unit_cost + "</td><td class='text-right'>" + itemData.unit_cost*itemData.quantity + "</td></tr>";
+                 
+                    });
+                 $("#invoice_items tbody").html(rows);
+            });
+        }
+
+
+        var triggerTabList = [].slice.call(document.querySelectorAll('#nav-order-detail-tab'))
+triggerTabList.forEach(function (triggerEl) {
+  var tabTrigger = new bootstrap.Tab(triggerEl)
+
+  triggerEl.addEventListener('click', function (event) {
+    event.preventDefault()
+    tabTrigger.show()
+  })
+})
+var triggerTabList = [].slice.call(document.querySelectorAll('#nav-summary-tab'))
+triggerTabList.forEach(function (triggerEl) {
+  var tabTrigger = new bootstrap.Tab(triggerEl)
+
+  triggerEl.addEventListener('click', function (event) {
+    event.preventDefault()
+    tabTrigger.show()
+  })
+})
+
+    </script>
+</body>
+
+</html>
